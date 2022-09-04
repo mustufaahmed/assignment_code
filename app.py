@@ -118,7 +118,7 @@ def getTenCommonWords(df,message_type,color="blue"):
         words.append(item[0])
         freq.append(item[1])
     fig = plt.figure(figsize=(11,5), dpi=100)
-    plt.barh(words, freq,color=color)
+    plt.bar(words, freq,color=color)
     plt.show()
     st.pyplot(fig)
     return
