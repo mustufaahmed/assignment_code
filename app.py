@@ -1,12 +1,10 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from wordcloud import WordCloud
-import string
-import seaborn as sns
+from collections import Counter
 
 # Downloads
 st.set_page_config(layout="wide")
@@ -106,6 +104,23 @@ def main():
     # Get spam messages trends
     st.header("Non-Spam Messages Trends On Daily Basis")
     plot_df(data, x=non_spam_count.index, y=non_spam_count.values, title='Trend and Seasonality of Non-Spam Messages on Daily Basis',color='red')
+
+    col3,col4 = st.columns(2)
+    with col3:
+        common_words = Counter()
+        for text in data["Message_body_working"].values:
+            for word in text.split():
+                common_words[word] += 1
+        
+        words = []
+        freq = []
+        for item in common_words:
+            words.append(item[0])
+            freq.append(item[1])
+            fig = plt.figure(figsize=(11,5), dpi=100)
+            plt.barh(words, freq)
+            plt.show()
+            st.pyplot(fig)
 
 if __name__ == '__main__':
     main()
