@@ -18,7 +18,7 @@ STOPWORDS = set(stopwords.words('english'))
 
 # Text Preprocessing
 def getlowerdata(data):
-    return data['Message_body_new'].str.lower()
+    return data['Message_body'].str.lower()
 
 # url remove
 def remove_urls(text):
