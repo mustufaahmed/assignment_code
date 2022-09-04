@@ -26,6 +26,7 @@ def main():
     spam_messages = getSpamData(data)
     # Get Frequency of spam messages according to months
     print(getBarChartPlot(spam_messages))
+    st.bar_chart(spam_messages)
 
 
 if __name__ == '__main__':
