@@ -57,9 +57,9 @@ def getMessagesGroupByDate(df,message_type):
     return result
 
 # get line Chart
-def plot_df(df, x, y, title="", xlabel='Date', ylabel='Number of Messages', dpi=100):
+def plot_df(df, x, y, title="", color="blue", xlabel='Date', ylabel='Number of Messages', dpi=100):
     fig = plt.figure(figsize=(15,4), dpi=dpi)
-    plt.plot(x, y, color='blue')
+    plt.plot(x, y, color=color)
     plt.gca().set(title=title, xlabel=xlabel, ylabel=ylabel)
     plt.show()
     st.pyplot(fig)
@@ -105,7 +105,7 @@ def main():
     non_spam_count = getMessagesGroupByDate(data,'non-spam')
     # Get spam messages trends
     st.header("Non-Spam Messages Trends On Daily Basis")
-    plot_df(data, x=non_spam_count.index, y=non_spam_count.values, title='Trend and Seasonality of Non-Spam Messages on Daily Basis')
+    plot_df(data, x=non_spam_count.index, y=non_spam_count.values, title='Trend and Seasonality of Non-Spam Messages on Daily Basis',color='red')
 
 if __name__ == '__main__':
     main()
