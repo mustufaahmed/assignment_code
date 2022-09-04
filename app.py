@@ -79,7 +79,12 @@ def main():
     generateWordCloud(data_for_Word_cloud)
 
     monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
-    sns.boxplot(x='Date_Received',y='Label',data=monthly_count,palette='rainbow')
+    plt.scatter(monthly_count.index, monthly_count.values)
+    plt.title('Hours Studied vs. Exam Score')
+    plt.xlabel('Hours Studied')
+    plt.ylabel('Exam Score')
+    fig = plt.figure(figsize=(11,5), dpi=100)
+    st.pyplot(fig)
 
 if __name__ == '__main__':
     main()
