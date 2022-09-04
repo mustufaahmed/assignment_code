@@ -134,7 +134,11 @@ def main():
 
     col3,col4 = st.columns(2)
     with col3:
+        st.header("Top 10 Common Words In Spam")
         getTenCommonWords(data,'spam')
+    with col4:
+        st.header("Top 10 Common Words In Non-Spam")
+        getTenCommonWords(data,'non-spam',color="red")
 
 if __name__ == '__main__':
     main()
