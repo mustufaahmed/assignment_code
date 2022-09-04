@@ -6,6 +6,7 @@ import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from wordcloud import WordCloud
 import string
+import seaborn as sns
 
 # Downloads
 st.set_page_config(layout="wide")
@@ -72,10 +73,13 @@ def main():
         # Get Frequency of non spam messages according to months
         st.header("Frequency Of Non Spam Messages")
         getBarChartPlot(non_spam_messages,"red")
-
+    # generate word cloud to show frequent words in noth spam and non spam
     st.header("Wordcloud of Most Frequent Words")
     data_for_Word_cloud = tokenizeTextIntoWords(data.Message_body)
     generateWordCloud(data_for_Word_cloud)
+
+    monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
+    sns.boxplot(x='Date_Received',y='Count',data=monthly_count.values,palette='rainbow')
 
 if __name__ == '__main__':
     main()
