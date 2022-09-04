@@ -134,7 +134,7 @@ def main():
 
     col3,col4 = st.columns(2)
     with col3:
-        getTenCommonWords('spam')
+        getTenCommonWords(data,'spam')
 
 if __name__ == '__main__':
     main()
