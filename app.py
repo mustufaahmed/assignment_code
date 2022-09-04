@@ -93,8 +93,8 @@ def plot_df(df, x, y, title="", color="blue", xlabel='Date', ylabel='Number of M
 def main():
     # Main Heading
     st.title("SMS Data Analysis")
-    # add file uploader
-    uploaded_file = st.file_uploader("Choose a file")
+    # add dropdown
+    select_label = st.selectbox('select label', data['Label'].unique())
     # read static file hardcode given
     data = pd.read_csv("SMS_data.csv",encoding='unicode_escape')
     # convert date column type to datetime which is object
