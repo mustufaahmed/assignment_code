@@ -24,22 +24,19 @@ def main():
     # create a new column of month
     data['Month'] = data['Date_Received'].apply(lambda x: x.month_name())
     
-    # Get Data Where Only Spam Messages
-    spam_messages = getSpamData(data)
-    # Get Frequency of spam messages according to months
-    st.header("Frequency Of Spam Messages")
-    getBarChartPlot(spam_messages)
-
-    # Get Data Where Only Non Spam Messages
-    non_spam_messages = getSpamData(data)
-    # Get Frequency of non spam messages according to months
-    st.header("Frequency Of Non Spam Messages")
-    getBarChartPlot(non_spam_messages,"red")
     col1,col2 = st.columns(2)
     with col1:
+        # Get Data Where Only Spam Messages
+        spam_messages = getSpamData(data)
+        # Get Frequency of spam messages according to months
+        st.header("Frequency Of Spam Messages")
         getBarChartPlot(spam_messages)
     with col2:
-        getBarChartPlot(non_spam_messages)
+        # Get Data Where Only Non Spam Messages
+        non_spam_messages = getSpamData(data)
+        # Get Frequency of non spam messages according to months
+        st.header("Frequency Of Non Spam Messages")
+        getBarChartPlot(non_spam_messages,"red")
 
 if __name__ == '__main__':
     main()
