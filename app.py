@@ -58,10 +58,11 @@ def getMessagesGroupByDate(df,message_type):
 
 # get line Chart
 def plot_df(df, x, y, title="", xlabel='Date', ylabel='Number of Messages', dpi=100):
-    plt.figure(figsize=(15,4), dpi=dpi)
+    fig = plt.figure(figsize=(15,4), dpi=dpi)
     plt.plot(x, y, color='blue')
     plt.gca().set(title=title, xlabel=xlabel, ylabel=ylabel)
     plt.show()
+    st.pyplot(fig)
     return
 
 def main():
