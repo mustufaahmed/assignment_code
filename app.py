@@ -94,7 +94,8 @@ def main():
     # Main Heading
     st.title("SMS Data Analysis")
     # add dropdown
-    select_label = st.selectbox('select label', data['Label'].unique())
+    options = ['Spam','Non-Spam']
+    select_label = st.selectbox('select label', options=options)
     # read static file hardcode given
     data = pd.read_csv("SMS_data.csv",encoding='unicode_escape')
     # convert date column type to datetime which is object
