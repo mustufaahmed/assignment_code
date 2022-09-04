@@ -13,9 +13,9 @@ def getNotSpamData(data):
 
 def getBarChartPlot(data):
     monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
-    plt.figure(figsize=(18,5), dpi=100)
+    fig = plt.figure(figsize=(18,5), dpi=100)
     plt.bar(monthly_count.index, height=monthly_count.values)
-
+    st.pyplot(fig)
 
 def main():
     st.title("SMS Data Analysis")
@@ -27,7 +27,6 @@ def main():
     spam_messages = getSpamData(data)
     # Get Frequency of spam messages according to months
     print(getBarChartPlot(spam_messages))
-    st.bar_chart(data=spam_messages, x="Month", y='Count', width=200, height=300, use_container_width=True)
 
 
 if __name__ == '__main__':
