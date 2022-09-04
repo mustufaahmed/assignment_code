@@ -9,6 +9,7 @@ from collections import Counter
 import re
 import string
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
 # Downloads and Configurations
 st.set_page_config(layout="wide")
@@ -38,6 +39,11 @@ def remove_punctuation(text):
 # remove Stopwords
 def remove_stopwords(text):
     return " ".join([word for word in str(text).split() if word not in STOPWORDS])
+
+# text Lemmatization
+def text_lemmatization(text):
+    lemmatizer = WordNetLemmatizer()
+    return " ".join([lemmatizer.lemmatize(word) for word in text.split()])
 
 # return spam data and input dataframe
 def getSpamData(data):
@@ -131,6 +137,7 @@ def main():
     data['Message_body_new'] = data["Message_body_new"].apply(lambda text: remove_html(text))
     data['Message_body_new'] = data["Message_body_new"].apply(lambda text: remove_punctuation(text))
     data['Message_body_new'] = data["Message_body_new"].apply(lambda text: remove_stopwords(text))
+    data['Message_body_new'] = data["Message_body_new"].apply(lambda text: text_lemmatization(text))
 
     # Main Heading
     st.title("SMS Data Analysis")
