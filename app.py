@@ -35,7 +35,7 @@ def main():
     # Get Frequency of non spam messages according to months
     st.header("Frequency Of Non Spam Messages")
     getBarChartPlot(non_spam_messages,"red")
-    col1,col2 = st.beta_columns(2)
+    col1,col2 = st.columns(2)
     with col1:
         getBarChartPlot(spam_messages)
     with col2:
