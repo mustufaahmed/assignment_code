@@ -48,8 +48,13 @@ def generateWordCloud(data):
     st.pyplot(fig)
 
 def main():
+    # Main Heading
     st.title("SMS Data Analysis")
+    # add file uploader
+    uploaded_file = st.file_uploader("Choose a file")
+    # read static file hardcode given
     data = pd.read_csv("SMS_data.csv",encoding='unicode_escape')
+    # convert date column type to datetime which is object
     data['Date_Received'] = pd.to_datetime(data['Date_Received'])
     # create a new column of month
     data['Month'] = data['Date_Received'].apply(lambda x: x.month_name())
