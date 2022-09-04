@@ -36,8 +36,10 @@ def main():
     st.header("Frequency Of Non Spam Messages")
     getBarChartPlot(non_spam_messages,"red")
     col1,col2 = st.beta_columns(2)
-    col1.getBarChartPlot(spam_messages)
-    col2.getBarChartPlot(non_spam_messages)
+    with col1:
+        getBarChartPlot(spam_messages)
+    with col2:
+        getBarChartPlot(non_spam_messages)
 
 if __name__ == '__main__':
     main()
