@@ -1,3 +1,4 @@
+from re import I
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -47,12 +48,38 @@ def generateWordCloud(data):
     st.pyplot(fig)
     return
 
+# group data according to date 
 def getMessagesGroupByDate(df,message_type):
     if message_type == 'spam':
         result = getSpamData(df).groupby('Date_Received')['Message_body'].count()
     else:
         result = getNotSpamData(df).groupby('Date_Received')['Message_body'].count()
     return result
+
+# Visualize 10 common words in data
+def getTenCommonWords(df,message_type,color="blue"):
+    if message_type == 'spam':
+        result = getSpamData(df)
+    else:
+        result = getNotSpamData(df)
+
+    cnt = Counter()
+    for text in result["Message_body"].values:
+        for word in text.split():
+            cnt[word] += 1
+    common_words = cnt.most_common(10)
+    words = []
+    freq = []
+    for item in common_words:
+        words.append(item[0])
+        freq.append(item[1])
+    fig = plt.figure(figsize=(11,5), dpi=100)
+    plt.barh(words, freq,color=color)
+    plt.show()
+    st.pyplot(fig)
+    return
+
+
 
 # get line Chart
 def plot_df(df, x, y, title="", color="blue", xlabel='Date', ylabel='Number of Messages', dpi=100):
@@ -107,20 +134,7 @@ def main():
 
     col3,col4 = st.columns(2)
     with col3:
-        cnt = Counter()
-        for text in data["Message_body"].values:
-            for word in text.split():
-                cnt[word] += 1
-        common_words = cnt.most_common(10)
-        words = []
-        freq = []
-        for item in common_words:
-            words.append(item[0])
-            freq.append(item[1])
-        fig = plt.figure(figsize=(11,5), dpi=100)
-        plt.barh(words, freq)
-        plt.show()
-        st.pyplot(fig)
+        getTenCommonWords('spam')
 
 if __name__ == '__main__':
     main()
