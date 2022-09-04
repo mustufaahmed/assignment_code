@@ -79,7 +79,7 @@ def main():
     generateWordCloud(data_for_Word_cloud)
 
     monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
-    sns.boxplot(x='Date_Received',y='Count',data=monthly_count,palette='rainbow')
+    sns.boxplot(x='Date_Received',y='Label',data=monthly_count,palette='rainbow')
 
 if __name__ == '__main__':
     main()
