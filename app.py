@@ -1,3 +1,7 @@
+# IMPORTANT NOTES
+# Streamlit Cloud App Link => https://mustufaahmed-assignment-code-app-nuaj8h.streamlitapp.com/
+# Github Repor Link => https://github.com/mustufaahmed/assignment_code
+
 from re import I
 import streamlit as st
 import pandas as pd
