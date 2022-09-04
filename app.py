@@ -10,9 +10,10 @@ import re
 import string
 from nltk.corpus import stopwords
 
-# Downloads
+# Downloads and Configurations
 st.set_page_config(layout="wide")
 nltk.download('punkt')
+nltk.download('stopwords')
 STOPWORDS = set(stopwords.words('english'))
 
 # Text Preprocessing
