@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 # return spam data and input dataframe
 def getSpamData(data):
@@ -26,8 +27,10 @@ def main():
     spam_messages = getSpamData(data)
     # Get Frequency of spam messages according to months
     print(getBarChartPlot(spam_messages))
-    monthly_count = spam_messages.groupby('Month')['Message_body'].count().sort_values(ascending=True)
-    st.bar_chart(monthly_count.index,monthly_count.values)
+    chart_data = pd.DataFrame(
+     np.random.randn(50, 3),
+     columns=["a", "b", "c"])
+     st.bar_chart(chart_data)
 
 
 if __name__ == '__main__':
