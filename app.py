@@ -118,7 +118,7 @@ def getTenCommonWords(df,message_type,color="blue"):
         words.append(item[0])
         freq.append(item[1])
     fig = plt.figure(figsize=(11,5), dpi=100)
-    plt.bar(words, freq,color=color)
+    plt.barh(words, freq,color=color)
     plt.show()
     st.pyplot(fig)
     return
@@ -162,20 +162,22 @@ def main():
         st.header("Frequency Of Spam Messages")
         getBarChartPlot(spam_messages,"red")
 
-        # generate word cloud to show frequent words in spam
-        st.header("Wordcloud of Most Frequent Words")
-        data_for_Word_cloud = tokenizeTextIntoWords(spam_messages.Message_body)
-        generateWordCloud(data_for_Word_cloud)
+        col1, col2 = st.columns(2)
+        with col1:
+            # top 10 common words
+            st.header("Top 10 Common Words In Spam")
+            getTenCommonWords(data,'spam',color="red")
+        with col2:
+            # generate word cloud to show frequent words in spam
+            st.header("Wordcloud of Most Frequent Words")
+            data_for_Word_cloud = tokenizeTextIntoWords(spam_messages.Message_body)
+            generateWordCloud(data_for_Word_cloud)
 
         # Get Data Where Only Spam Messages
         spam_count = getMessagesGroupByDate(data,'spam')
         # Get spam messages trends
         st.header("Spam Messages Trends On Daily Basis")
         plot_df(data, x=spam_count.index, y=spam_count.values, title='Trend and Seasonality of Spam Messages on Daily Basis',color='red')
-
-        # top 10 common words
-        st.header("Top 10 Common Words In Spam")
-        getTenCommonWords(data,'spam',color="red")
 
     else:
         # Get Data Where Only Non Spam Messages
@@ -184,20 +186,22 @@ def main():
         st.header("Frequency Of Non Spam Messages")
         getBarChartPlot(non_spam_messages)
 
-        # generate word cloud to show frequent words in non spam
-        st.header("Wordcloud of Most Frequent Words")
-        data_for_Word_cloud = tokenizeTextIntoWords(non_spam_messages.Message_body)
-        generateWordCloud(data_for_Word_cloud)
+        col1, col2 = st.columns(2)
+        with col1:
+            # most common words non spam
+            st.header("Top 10 Common Words In Non-Spam")
+            getTenCommonWords(data,'non-spam')
+        with col2:
+            # generate word cloud to show frequent words in non spam
+            st.header("Wordcloud of Most Frequent Words")
+            data_for_Word_cloud = tokenizeTextIntoWords(non_spam_messages.Message_body)
+            generateWordCloud(data_for_Word_cloud)
 
         # Get Data Where Only Spam Messages
         non_spam_count = getMessagesGroupByDate(data,'non-spam')
         # Get spam messages trends
         st.header("Non-Spam Messages Trends On Daily Basis")
         plot_df(data, x=non_spam_count.index, y=non_spam_count.values, title='Trend and Seasonality of Non-Spam Messages on Daily Basis')
-
-        # most common words non spam
-        st.header("Top 10 Common Words In Non-Spam")
-        getTenCommonWords(data,'non-spam')
 
 if __name__ == '__main__':
     main()
