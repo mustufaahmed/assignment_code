@@ -28,13 +28,13 @@ def main():
     spam_messages = getSpamData(data)
     # Get Frequency of spam messages according to months
     st.header("Frequency Of Spam Messages")
-    print(getBarChartPlot(spam_messages))
+    getBarChartPlot(spam_messages)
 
     # Get Data Where Only Non Spam Messages
     non_spam_messages = getSpamData(data)
     # Get Frequency of non spam messages according to months
     st.header("Frequency Of Non Spam Messages")
-    print(getBarChartPlot(non_spam_messages,"red"))
+    getBarChartPlot(non_spam_messages,"red")
 
 
 if __name__ == '__main__':
