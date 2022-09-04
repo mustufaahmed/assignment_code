@@ -8,6 +8,7 @@ from wordcloud import WordCloud
 import string
 
 # Downloads
+st.set_page_config(layout="wide")
 nltk.download('punkt')
 
 # return spam data and input dataframe
