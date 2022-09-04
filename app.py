@@ -10,6 +10,7 @@ import re
 import string
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
 
 # Downloads and Configurations
 st.set_page_config(layout="wide")
@@ -19,6 +20,7 @@ nltk.download('wordnet')
 nltk.download('omw-1.4')
 STOPWORDS = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
+word_map = {"N":wordnet.NOUN, "V":wordnet.VERB, "J":wordnet.ADJ, "R":wordnet.ADV}
 
 # Text Preprocessing
 def getlowerdata(data):
@@ -45,7 +47,8 @@ def remove_stopwords(text):
 
 # text Lemmatization
 def text_lemmatization(text):
-    return " ".join([lemmatizer.lemmatize(word) for word in text.split()])
+    pos_tagged_text = nltk.pos_tag(text.split())
+    return " ".join([lemmatizer.lemmatize(word, word_map.get(pos[0], wordnet.NOUN)) for word, pos in pos_tagged_text])
 
 # return spam data and input dataframe
 def getSpamData(data):
