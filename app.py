@@ -16,6 +16,7 @@ st.set_page_config(layout="wide")
 nltk.download('punkt')
 nltk.download('stopwords')
 STOPWORDS = set(stopwords.words('english'))
+lemmatizer = WordNetLemmatizer()
 
 # Text Preprocessing
 def getlowerdata(data):
@@ -42,7 +43,6 @@ def remove_stopwords(text):
 
 # text Lemmatization
 def text_lemmatization(text):
-    lemmatizer = WordNetLemmatizer()
     return " ".join([lemmatizer.lemmatize(word) for word in text.split()])
 
 # return spam data and input dataframe
