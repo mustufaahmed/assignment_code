@@ -39,7 +39,7 @@ def generateWordCloud(data):
                 background_color ='black',
                 min_font_size = 10).generate(data)
     # plot the WordCloud image                      
-    fig = plt.figure(figsize = (8, 8), facecolor = None, dpi=100)
+    fig = plt.figure(figsize = (8, 4), facecolor = None, dpi=100)
     plt.imshow(wordcloud)
     plt.axis("off")
     plt.tight_layout(pad = 0)
