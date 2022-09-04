@@ -27,11 +27,12 @@ def main():
     spam_messages = getSpamData(data)
     # Get Frequency of spam messages according to months
     print(getBarChartPlot(spam_messages))
-    chart_data = pd.DataFrame(
-     np.random.randn(50, 3),
-     columns=["a", "b", "c"])
-    st.bar_chart(chart_data)
-
+    fig = plt.figure()
+    ax = fig.add_axes([0,0,1,1])
+    langs = ['C', 'C++', 'Java', 'Python', 'PHP']
+    students = [23,17,35,29,12]
+    ax.bar(langs,students)
+    plt.show()
 
 if __name__ == '__main__':
     main()
