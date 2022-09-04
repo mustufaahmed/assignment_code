@@ -47,6 +47,22 @@ def generateWordCloud(data):
     plt.tight_layout(pad = 0)
     plt.show()
     st.pyplot(fig)
+    return
+
+def getMessagesGroupByDate(df,message_type):
+    if message_type == 'spam':
+        result = getSpamData(df).groupby('Date_Received')['Message_body'].count()
+    else:
+        result = getNotSpamData(df).groupby('Date_Received')['Message_body'].count()
+    return result
+
+# get line Chart
+def plot_df(df, x, y, title="", xlabel='Date', ylabel='Number of Messages', dpi=100):
+    plt.figure(figsize=(15,4), dpi=dpi)
+    plt.plot(x, y, color='blue')
+    plt.gca().set(title=title, xlabel=xlabel, ylabel=ylabel)
+    plt.show()
+    return
 
 def main():
     # Main Heading
@@ -78,14 +94,13 @@ def main():
     data_for_Word_cloud = tokenizeTextIntoWords(data.Message_body)
     generateWordCloud(data_for_Word_cloud)
 
-    monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
-    plt.scatter(monthly_count.index, monthly_count.values)
-    plt.title('Hours Studied vs. Exam Score')
-    plt.xlabel('Hours Studied')
-    plt.ylabel('Exam Score')
-    fig = plt.figure(figsize=(11,5), dpi=100)
-    plt.show()
-    st.pyplot(fig)
-
+    col3,col4 = st.columns(2)
+    
+    with col3:
+        # Get Data Where Only Spam Messages
+        spam_count = getMessagesGroupByDate(data,'spam')
+        # Get spam messages trends
+        st.header("Spam Messages Trends On Daily Basis")
+        plot_df(data, x=spam_count.index, y=spam_count.values, title='Trend and Seasonality of Spam Messages on Daily Basis')
 if __name__ == '__main__':
     main()
