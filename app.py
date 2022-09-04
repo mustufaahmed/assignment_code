@@ -11,10 +11,10 @@ def getSpamData(data):
 def getNotSpamData(data):
     return data[data['Label'] == 'Non-Spam']
 
-def getBarChartPlot(data):
+def getBarChartPlot(data,color="blue"):
     monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
     fig = plt.figure(figsize=(18,5), dpi=100)
-    plt.bar(monthly_count.index, height=monthly_count.values)
+    plt.bar(monthly_count.index, height=monthly_count.values,color=color)
     st.pyplot(fig)
 
 def main():
@@ -23,10 +23,11 @@ def main():
     data['Date_Received'] = pd.to_datetime(data['Date_Received'])
     # create a new column of month
     data['Month'] = data['Date_Received'].apply(lambda x: x.month_name())
-    # Get Data Where Only Spam Messages
-    spam_messages = getSpamData(data)
-    # Get Frequency of spam messages according to months
-    print(getBarChartPlot(spam_messages))
+    
+    # Get Data Where Only Non Spam Messages
+    non_spam_messages = getSpamData(data)
+    # Get Frequency of non spam messages according to months
+    print(getBarChartPlot(non_spam_messages))
 
 
 if __name__ == '__main__':
