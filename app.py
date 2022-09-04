@@ -7,6 +7,9 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from wordcloud import WordCloud
 import string
 
+# Downloads
+nltk.download('punkt')
+
 # return spam data and input dataframe
 def getSpamData(data):
     return data[data['Label'] == 'Spam']
