@@ -68,6 +68,7 @@ def main():
         st.header("Frequency Of Non Spam Messages")
         getBarChartPlot(non_spam_messages,"red")
 
+    st.header("Wordcloud of Most Frequent Words")
     data_for_Word_cloud = tokenizeTextIntoWords(data.Message_body)
     generateWordCloud(data_for_Word_cloud)
 
