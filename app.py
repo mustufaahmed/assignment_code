@@ -6,10 +6,37 @@ import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from wordcloud import WordCloud
 from collections import Counter
+import re
+import string
+from nltk.corpus import stopwords
 
 # Downloads
 st.set_page_config(layout="wide")
 nltk.download('punkt')
+STOPWORDS = set(stopwords.words('english'))
+
+# Text Preprocessing
+def getlowerdata(data):
+    return data['Message_body_new'].str.lower()
+
+# url remove
+def remove_urls(text):
+    url_pattern = re.compile(r'https?://\S+|www\.\S+')
+    return url_pattern.sub(r'', text)
+
+# Removal of html tags
+def remove_html(text):
+    html_pattern = re.compile('<.*?>')
+    return html_pattern.sub(r'', text)
+
+# remove specical characters
+def remove_punctuation(text):
+    PUNCT_TO_REMOVE = string.punctuation
+    return text.translate(str.maketrans('', '', PUNCT_TO_REMOVE))
+
+# remove Stopwords
+def remove_stopwords(text):
+    return " ".join([word for word in str(text).split() if word not in STOPWORDS])
 
 # return spam data and input dataframe
 def getSpamData(data):
@@ -29,7 +56,7 @@ def tokenizeTextIntoWords(column):
 
 # visualize bar chart data
 def getBarChartPlot(data,color="blue"):
-    monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
+    monthly_count = data.groupby('Month')['Message_body_new'].count().sort_values(ascending=True)
     fig = plt.figure(figsize=(11,5), dpi=100)
     plt.bar(monthly_count.index, height=monthly_count.values,color=color)
     st.pyplot(fig)
@@ -51,9 +78,9 @@ def generateWordCloud(data):
 # group data according to date 
 def getMessagesGroupByDate(df,message_type):
     if message_type == 'spam':
-        result = getSpamData(df).groupby('Date_Received')['Message_body'].count()
+        result = getSpamData(df).groupby('Date_Received')['Message_body_new'].count()
     else:
-        result = getNotSpamData(df).groupby('Date_Received')['Message_body'].count()
+        result = getNotSpamData(df).groupby('Date_Received')['Message_body_new'].count()
     return result
 
 # Visualize 10 common words in data
@@ -64,7 +91,7 @@ def getTenCommonWords(df,message_type,color="blue"):
         result = getNotSpamData(df)
 
     cnt = Counter()
-    for text in result["Message_body"].values:
+    for text in result["Message_body_new"].values:
         for word in text.split():
             cnt[word] += 1
     common_words = cnt.most_common(10)
@@ -91,17 +118,24 @@ def plot_df(df, x, y, title="", color="blue", xlabel='Date', ylabel='Number of M
     return
 
 def main():
-    # Main Heading
-    st.title("SMS Data Analysis")
-    # add dropdown
-    options = ['Spam','Non-Spam']
-    select_label = st.selectbox('select label', options=options)
     # read static file hardcode given
     data = pd.read_csv("SMS_data.csv",encoding='unicode_escape')
     # convert date column type to datetime which is object
     data['Date_Received'] = pd.to_datetime(data['Date_Received'])
     # create a new column of month
     data['Month'] = data['Date_Received'].apply(lambda x: x.month_name())
+    # Text Preprocessing
+    data['Message_body_new'] = getlowerdata(data)
+    data['Message_body_new'] = data["Message_body_new"].apply(lambda text: remove_urls(text))
+    data['Message_body_new'] = data["Message_body_new"].apply(lambda text: remove_html(text))
+    data['Message_body_new'] = data["Message_body_new"].apply(lambda text: remove_punctuation(text))
+    data['Message_body_new'] = data["Message_body_new"].apply(lambda text: remove_stopwords(text))
+
+    # Main Heading
+    st.title("SMS Data Analysis")
+    # add dropdown
+    options = ['Spam','Non-Spam']
+    select_label = st.selectbox('select label', options=options)
     
     if select_label == 'Spam':
         # Get Data Where Only Spam Messages
