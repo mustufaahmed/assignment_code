@@ -95,13 +95,17 @@ def main():
     data_for_Word_cloud = tokenizeTextIntoWords(data.Message_body)
     generateWordCloud(data_for_Word_cloud)
 
-    col3,col4 = st.columns(2)
-    
-    with col3:
-        # Get Data Where Only Spam Messages
-        spam_count = getMessagesGroupByDate(data,'spam')
-        # Get spam messages trends
-        st.header("Spam Messages Trends On Daily Basis")
-        plot_df(data, x=spam_count.index, y=spam_count.values, title='Trend and Seasonality of Spam Messages on Daily Basis')
+    # Get Data Where Only Spam Messages
+    spam_count = getMessagesGroupByDate(data,'spam')
+    # Get spam messages trends
+    st.header("Spam Messages Trends On Daily Basis")
+    plot_df(data, x=spam_count.index, y=spam_count.values, title='Trend and Seasonality of Spam Messages on Daily Basis')
+
+    # Get Data Where Only Spam Messages
+    non_spam_count = getMessagesGroupByDate(data,'non-spam')
+    # Get spam messages trends
+    st.header("Non-Spam Messages Trends On Daily Basis")
+    plot_df(data, x=non_spam_count.index, y=non_spam_count.values, title='Trend and Seasonality of Non-Spam Messages on Daily Basis')
+
 if __name__ == '__main__':
     main()
