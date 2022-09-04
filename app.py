@@ -84,6 +84,7 @@ def main():
     plt.xlabel('Hours Studied')
     plt.ylabel('Exam Score')
     fig = plt.figure(figsize=(11,5), dpi=100)
+    plt.show()
     st.pyplot(fig)
 
 if __name__ == '__main__':
