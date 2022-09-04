@@ -107,20 +107,20 @@ def main():
 
     col3,col4 = st.columns(2)
     with col3:
-        common_words = Counter()
+        cnt = Counter()
         for text in data["Message_body"].values:
             for word in text.split():
-                common_words[word] += 1
-        
+                cnt[word] += 1
+        common_words = cnt.most_common(10)
         words = []
         freq = []
         for item in common_words:
             words.append(item[0])
             freq.append(item[1])
-            fig = plt.figure(figsize=(11,5), dpi=100)
-            plt.barh(words, freq)
-            plt.show()
-            st.pyplot(fig)
+        fig = plt.figure(figsize=(11,5), dpi=100)
+        plt.barh(words, freq)
+        plt.show()
+        st.pyplot(fig)
 
 if __name__ == '__main__':
     main()
