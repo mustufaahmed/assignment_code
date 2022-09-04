@@ -15,10 +15,32 @@ def getSpamData(data):
 def getNotSpamData(data):
     return data[data['Label'] == 'Non-Spam']
 
+# get the data and return in tokenize form
+def tokenizeTextIntoWords(column):
+    result = ""
+    for text in column:
+        if text:
+            result += " ".join(word_tokenize(text))+" "
+    return result
+
+# visualize bar chart data
 def getBarChartPlot(data,color="blue"):
     monthly_count = data.groupby('Month')['Message_body'].count().sort_values(ascending=True)
     fig = plt.figure(figsize=(18,5), dpi=100)
     plt.bar(monthly_count.index, height=monthly_count.values,color=color)
+    st.pyplot(fig)
+
+# Generate WordCloud
+def generateWordCloud(data):
+    wordcloud = WordCloud(width = 800, height = 800,
+                background_color ='black',
+                min_font_size = 10).generate(data)
+    # plot the WordCloud image                      
+    fig = plt.figure(figsize = (8, 8), facecolor = None, dpi=100)
+    plt.imshow(wordcloud)
+    plt.axis("off")
+    plt.tight_layout(pad = 0)
+    plt.show()
     st.pyplot(fig)
 
 def main():
@@ -41,6 +63,9 @@ def main():
         # Get Frequency of non spam messages according to months
         st.header("Frequency Of Non Spam Messages")
         getBarChartPlot(non_spam_messages,"red")
+
+    data_for_Word_cloud = tokenizeTextIntoWords(data.Message_body)
+    generateWordCloud(data_for_Word_cloud)
 
 if __name__ == '__main__':
     main()
