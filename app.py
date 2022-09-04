@@ -25,6 +25,8 @@ def main():
     # Get Data Where Only Spam Messages
     spam_messages = getSpamData(data)
     # Get Frequency of spam messages according to months
-    getBarChartPlot(spam_messages)
+    print(getBarChartPlot(spam_messages))
+
+
 if __name__ == '__main__':
     main()
