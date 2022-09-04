@@ -74,7 +74,7 @@ def tokenizeTextIntoWords(column):
 # visualize bar chart data
 def getBarChartPlot(data,color="blue"):
     monthly_count = data.groupby('Month')['Message_body_new'].count().sort_values(ascending=True)
-    fig = plt.figure(figsize=(11,5), dpi=100)
+    fig = plt.figure(figsize=(18,5), dpi=100)
     plt.bar(monthly_count.index, height=monthly_count.values,color=color)
     st.pyplot(fig)
 
