@@ -35,11 +35,11 @@ def getBarChartPlot(data,color="blue"):
 
 # Generate WordCloud
 def generateWordCloud(data):
-    wordcloud = WordCloud(width = 800, height = 800,
+    wordcloud = WordCloud(width = 800, height = 300,
                 background_color ='black',
                 min_font_size = 10).generate(data)
     # plot the WordCloud image                      
-    fig = plt.figure(figsize = (8, 4), facecolor = None, dpi=100)
+    fig = plt.figure(figsize = (8, 8), facecolor = None, dpi=100)
     plt.imshow(wordcloud)
     plt.axis("off")
     plt.tight_layout(pad = 0)
