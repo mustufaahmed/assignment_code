@@ -108,7 +108,7 @@ def main():
     col3,col4 = st.columns(2)
     with col3:
         common_words = Counter()
-        for text in data["Message_body_working"].values:
+        for text in data["Message_body"].values:
             for word in text.split():
                 common_words[word] += 1
         
